@@ -10,7 +10,7 @@ const produtoModel = new schema({
     foto: { type: String, required: true },
     ativo: { type: Boolean, required: true },
     dataCriacao: { type: Date, default: Date.now }
-}, { versionKey: fase });
+}, { versionKey: false });
 
 produtoModel.pre('save', next => {
     let agora = new Date();

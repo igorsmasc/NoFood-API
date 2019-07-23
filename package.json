@@ -2,8 +2,9 @@
   "name": "nofood-api",
   "version": "1.0.0",
   "description": "API feita em NodeJs para utilização do aplicativo NoFood",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "start": "nodemon server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
