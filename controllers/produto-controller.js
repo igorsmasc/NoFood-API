@@ -1,5 +1,5 @@
 'use strict'
-require('../models/produto-model');
+
 const repository = require('../repositories/produto-repository');
 
 function produtoController() {

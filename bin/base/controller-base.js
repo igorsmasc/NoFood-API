@@ -6,7 +6,7 @@ exports.post = async(repository, validationContract, req, res) => {
         if(!validationContract.isValid()) {
             res.status(400).send({
                 message: 'Existem dados inválidos na sua requisição', 
-                validation: validationContract.error()
+                validation: validationContract.errors()
             }).end();
             return;
         }
@@ -28,7 +28,7 @@ exports.put = async(repository, validationContract, req, res) => {
         if(!validationContract.isValid()) {
             res.status(400).send({
                 message: 'Existem dados inválidos na sua requisição',
-                validation: validationContract.error()
+                validation: validationContract.errors()
             }).end();
             return;
         }
@@ -61,7 +61,7 @@ exports.getById = async(repository, req, res) => {
         } else {
             res.status(400).send({ message: 'O parametro Id precisa ser informado' });
         }
-        
+
     } catch (error) {
         console.log('GetById com error, motivo: ', err);
         res.status(500).send({message: 'Erro no processamento', error: err});

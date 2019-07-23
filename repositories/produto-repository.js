@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+require('../models/produto-model');
 const base = require('../bin/base/repository-base');
 
 class produtoRepository {
