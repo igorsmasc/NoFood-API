@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const variables = require('../bin/configuration/variables');
 
 // Routers
-const categoriaRouter = require('../routes/catergoria-router');
+const categoriaRouter = require('../routes/categoria-router');
 const produtoRouter = require('../routes/produto-router');
 
 // Criando/Invocando API
