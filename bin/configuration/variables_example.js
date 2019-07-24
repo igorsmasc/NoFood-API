@@ -11,6 +11,9 @@ const variables = {
     },
     Database: {
         connection: process.env.connection || 'mongodb+srv:'
+    },
+    Security: {
+        secretKey: 'd41d8cd98f00b204e9800998ec11d363fdc6df0d'
     }
 }
 

@@ -6,14 +6,14 @@ class usuarioRepository {
     
     constructor() {
         this._base = new base('Usuario');
-        this._projection = 'nome email _id';
+        this._projection = 'nome email _id ativo';
     }
 
     async emailExiste(Email) {
         return await this._base._model.findOne({ email: Email }, this._projection);
     }
 
-    async authenticate( Email, Senha) {
+    async authenticate(Email, Senha) {
         let _hashSenha = md5(Senha);
         return await this._base._model.findOne({ email: Email, senha: _hashSenha }, this._projection)
     }
@@ -28,7 +28,8 @@ class usuarioRepository {
             {
                 nome: data.nome,
                 email: data.email,
-                foto: data.foto
+                foto: data.foto,
+                ativo: data.ativo
             });
         return this._base._model.findById(usuarioAtualizado._id, this._projection);
     }
@@ -38,7 +39,7 @@ class usuarioRepository {
     }
 
     async getById(id) {
-        return await this._base._model.findById(id, 'nome emai _id foto');
+        return await this._base._model.findById(id, 'nome emai _id foto ativo');
     }
 
     async delete(id) {
