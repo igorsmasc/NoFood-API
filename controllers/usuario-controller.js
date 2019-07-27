@@ -9,10 +9,10 @@ const jwt = require('jsonwebtoken');
 const variables = require('../bin/configuration/variables')
 
 function usuarioController() {
-    
+
 }
 
-usuarioController.prototype.post = async (req, res) => { 
+usuarioController.prototype.post = async (req, res) => {
     let _validationContract = new validation();
 
     _validationContract.isRequired(req.body.nome, 'Informe seu nome');
@@ -22,29 +22,33 @@ usuarioController.prototype.post = async (req, res) => {
     _validationContract.isRequired(req.body.senhaConfirmacao, 'A senha de confirmação é obrigatória');
     _validationContract.isTrue(req.body.senha != req.body.senhaConfirmacao, 'A senha e a confirmação não são iguais');
 
-    let usuario = await _repo.emailExiste(req.body.email);
-    if(usuario) {
-        _validationContract.isTrue((usuario.nome != undefined), `Já existe o email ${req.body.email} cadastrado em nossa base`);
+    if (req.body.email) {
+        let usuario = await _repo.emailExiste(req.body.email);
+        if (usuario) {
+            _validationContract.isTrue((usuario.nome != undefined), `Já existe o email ${req.body.email} cadastrado em nossa base`);
+        }
     }
 
-    // Criptografa a senha do usuário
-    req.body.senha = md5(req.body.senha);
+    if (req.body.senha) {
+        // Criptografa a senha do usuário
+        req.body.senha = md5(req.body.senha);
+    }
 
     ctrlBase.post(_repo, _validationContract, req, res);
 };
 
-usuarioController.prototype.put = async (req, res) => { 
+usuarioController.prototype.put = async (req, res) => {
     let _validationContract = new validation();
 
     _validationContract.isRequired(req.body.nome, 'Informe seu nome');
     _validationContract.isRequired(req.body.email, 'Informe seu email');
     _validationContract.isEmail(req.body.email, 'O email informado é inválido');
     _validationContract.isRequired(req.params.id, "Informe o id do usuario que será editado")
-   
+
     let usuario = await _repo.emailExiste(req.body.email);
-    if(usuario) {
+    if (usuario) {
         _validationContract.isTrue(
-            (usuario.nome != undefined) && 
+            (usuario.nome != undefined) &&
             (usuario._id != req.params.id), `Já existe o email ${req.body.email} cadastrado em nossa base`);
     }
 
@@ -59,24 +63,24 @@ usuarioController.prototype.getById = async (req, res) => {
     ctrlBase.getById(_repo, req, res);
 };
 
-usuarioController.prototype.delete = async (req, res) => { 
+usuarioController.prototype.delete = async (req, res) => {
     ctrlBase.delete(_repo, req, res);
 };
 
 usuarioController.prototype.autenticar = async (req, res) => {
-   
+
     let _validationContract = new validation();
     _validationContract.isRequired(req.body.email, 'Informe seu email');
     _validationContract.isEmail(req.body.email, 'O email informado é inválido');
     _validationContract.isRequired(req.body.senha, 'Informe sua senha');
-   
+
     if (!_validationContract.isValid()) {
         res.status(400).send({ message: 'Não foi possível efetuar o login', validation: _validationContract.errors() });
         return;
     }
 
     let usuarioEncontrado = await _repo.authenticate(req.body.email, req.body.senha);
-    if(usuarioEncontrado) {
+    if (usuarioEncontrado) {
         res.status(200).send({
             usuario: usuarioEncontrado,
             token: jwt.sign({ user: usuarioEncontrado }, variables.Security.secretKey)
