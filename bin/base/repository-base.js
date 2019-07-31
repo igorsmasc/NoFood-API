@@ -1,4 +1,5 @@
 'use strict'
+
 const mongoose = require('mongoose');
 
 class repositoryBase {
@@ -8,15 +9,15 @@ class repositoryBase {
     }
 
     async create(data) {
-        let model = new this._model(data);
-        let result = await model.save();
-        return result;
+        let modelo = new this._model(data);
+        let resultado = await modelo.save();
+        return resultado;
     }
 
     async update(id, data) {
         await this._model.findByIdAndUpdate(id, { $set: data });
-        let result = await this._model.findById(id);
-        return result;
+        let resultado = await this._model.findById(id);
+        return resultado;
     }
 
     async getAll() {
