@@ -10,7 +10,7 @@ const variables = {
         port: process.env.port || 3000
     },
     Database: {
-        connection: process.env.connection || 'mongodb+srv:'
+        connection: process.env.connection || 'mongodb+srv://igor123:123@cluster0-h24c5.mongodb.net/nofood?retryWrites=true:'
     },
     Security: {
         secretKey: 'd41d8cd98f00b204e9800998ec11d363fdc6df0d'
