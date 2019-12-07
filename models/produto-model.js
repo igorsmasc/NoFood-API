@@ -7,6 +7,7 @@ const produtoModel = new schema({
     nome: { type: String, required: true, trim: true, index: true },
     descricao: { type: String, required: true },
     preco: { type: Number, required: true, default: 0 },
+    quantidade: { type: Number, required: true, default: 0 },
     foto: { type: String, required: true },
     ativo: { type: Boolean, required: true, default: true },
     categoriaId: { type: schema.Types.ObjectId, ref: 'Categoria' },
